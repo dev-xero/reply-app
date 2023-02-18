@@ -84,7 +84,7 @@ fun ReplyHomeScreen(
             }
         }) {
             ReplyAppContent(
-                navigationType = ReplyNavigationType.NAVIGATION_RAIL,
+                navigationType = ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER,
                 replyUiState = replyUiState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
@@ -123,28 +123,34 @@ private fun ReplyAppContent(
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
 ) {
-    AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
-        ReplyNavigationRail(
-            currentTab = replyUiState.currentMailbox,
-            navigationItemContentList = navigationItemContentList,
-            onTabPressed = onTabPressed
-        )
-    }
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.inverseOnSurface)
+    Row(
+        modifier = modifier.fillMaxSize()
     ) {
-        ReplyListOnlyContent(
-            replyUiState = replyUiState,
-            onEmailCardPressed = onEmailCardPressed,
-            modifier = Modifier.weight(1f)
-        )
-        ReplyBottomNavigationBar(
-            currentTab = replyUiState.currentMailbox,
-            onTabPressed = onTabPressed,
-            navigationItemContentList = navigationItemContentList
-        )
+        AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
+            ReplyNavigationRail(
+                currentTab = replyUiState.currentMailbox,
+                navigationItemContentList = navigationItemContentList,
+                onTabPressed = onTabPressed
+            )
+        }
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.inverseOnSurface)
+        ) {
+            ReplyListOnlyContent(
+                replyUiState = replyUiState,
+                onEmailCardPressed = onEmailCardPressed,
+                modifier = Modifier.weight(1f)
+            )
+            AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
+                ReplyBottomNavigationBar(
+                    currentTab = replyUiState.currentMailbox,
+                    onTabPressed = onTabPressed,
+                    navigationItemContentList = navigationItemContentList
+                )
+            }
+        }
     }
 }
 
