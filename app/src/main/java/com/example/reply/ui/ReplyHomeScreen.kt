@@ -95,6 +95,11 @@ fun ReplyHomeScreen(
             modifier = modifier
 
         )
+    } else {
+        ReplyDetailsScreen(
+            replyUiState = replyUiState,
+            onBackPressed = onDetailScreenBackPressed
+        )
     }
 }
 
