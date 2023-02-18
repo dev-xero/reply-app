@@ -104,7 +104,7 @@ object LocalAccountsDataProvider {
             firstName = "Stef",
             lastName = "Chow",
             email = "schow@example.com",
-            avatar = R.drawable.avatar_9
+            avatar = R.drawable.avatar_spam
         ),
         Account(
             id = 12,

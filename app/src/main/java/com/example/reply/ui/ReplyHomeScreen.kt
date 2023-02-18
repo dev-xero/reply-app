@@ -86,14 +86,16 @@ fun ReplyHomeScreen(
             text = stringResource(id = R.string.tab_spam)
         )
     )
-    ReplyAppContent(
-        replyUiState = replyUiState,
-        onTabPressed = onTabPressed,
-        onEmailCardPressed = onEmailCardPressed,
-        navigationItemContentList = navigationItemContentList,
-        modifier = modifier
+    if (replyUiState.isShowingHomepage) {
+        ReplyAppContent(
+            replyUiState = replyUiState,
+            onTabPressed = onTabPressed,
+            onEmailCardPressed = onEmailCardPressed,
+            navigationItemContentList = navigationItemContentList,
+            modifier = modifier
 
-    )
+        )
+    }
 }
 
 /**
@@ -130,10 +132,10 @@ private fun ReplyAppContent(
  */
 @Composable
 private fun ReplyNavigationRail(
+    modifier: Modifier = Modifier,
     currentTab: MailboxType,
     onTabPressed: ((MailboxType) -> Unit) = {},
-    navigationItemContentList: List<NavigationItemContent>,
-    modifier: Modifier = Modifier
+    navigationItemContentList: List<NavigationItemContent>
 ) {
     NavigationRail(modifier = modifier.fillMaxHeight()) {
         for (navItem in navigationItemContentList) {

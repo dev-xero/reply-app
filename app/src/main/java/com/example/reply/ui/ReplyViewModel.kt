@@ -16,6 +16,7 @@
 
 package com.example.reply.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
@@ -41,7 +42,7 @@ class ReplyViewModel : ViewModel() {
      * Initializing mailbox emails by getting them from [LocalEmailsDataProvider]
      */
     private fun initializeUIState() {
-        var mailboxes: Map<MailboxType, List<Email>> =
+        val mailboxes: Map<MailboxType, List<Email>> =
             LocalEmailsDataProvider.allEmails.groupBy { it.mailbox }
         _uiState.value =
             ReplyUiState(
