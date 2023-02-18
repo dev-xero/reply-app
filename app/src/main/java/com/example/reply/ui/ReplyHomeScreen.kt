@@ -16,6 +16,7 @@
 
 package com.example.reply.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -83,23 +84,23 @@ fun ReplyHomeScreen(
             }
         }) {
             ReplyAppContent(
+                navigationType = ReplyNavigationType.NAVIGATION_RAIL,
                 replyUiState = replyUiState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
-                modifier = modifier
-
+                modifier = modifier,
             )
         }
     } else {
         if (replyUiState.isShowingHomepage) {
             ReplyAppContent(
+                navigationType = ReplyNavigationType.BOTTOM_NAVIGATION,
                 replyUiState = replyUiState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
                 modifier = modifier
-
             )
         } else {
             ReplyDetailsScreen(
@@ -115,12 +116,20 @@ fun ReplyHomeScreen(
  */
 @Composable
 private fun ReplyAppContent(
+    navigationType: ReplyNavigationType,
     replyUiState: ReplyUiState,
     onTabPressed: ((MailboxType) -> Unit),
     onEmailCardPressed: (Email) -> Unit,
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
 ) {
+    AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
+        ReplyNavigationRail(
+            currentTab = replyUiState.currentMailbox,
+            navigationItemContentList = navigationItemContentList,
+            onTabPressed = onTabPressed
+        )
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
